@@ -1,0 +1,31 @@
+{% extends "baseadmin.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+        <div class="page-wrapper">
+            <div class="content">
+                <div class="row">
+                    <div class="col-sm-4 col-3">
+                        <h4 class="page-title">{{judul}}</h4>
+                    </div>
+                    <div class="col-sm-8 col-9 text-right m-b-20">
+                        <a href="{% url 'petugas_admin'  %}" class="btn btn btn-danger btn-rounded float-right"><i class="fa fa-angle-left"></i> Kembali</a>
+                    </div>
+                </div>
+				<div class="row">
+					<div class="col-md-12">
+					                                <h4> Apakah Petugas tersebut mau dihapus <b>"{{hapus}}"</b> ?</h4>
+													<form action="{% url 'deletepetugas_admin' hapus.id %}" method="POST">
+                    									{% csrf_token %}    
+													<br>
+                   							 	
+													<div class="m-t-20 text-center">
+														<button class="btn btn-info submit-btn">Save</button>
+													</div>
+													</form>
+                	</div>
+                </div>
+            </div>
+            
+        </div>
+{% endblock content  %} 

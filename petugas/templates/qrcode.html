@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- profile22:59-->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/iconsekolah.png' %}">
+    
+        <title>{{judul}}</title>
+        
+  
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}">
+
+</head>
+<body>
+    <div class="main-wrapper">
+        <div class="header">
+			<div class="header-left">
+				<a href="#" class="logo">
+					<img src="{% static 'assets/img/iconsekolah.png' %}" width="35" height="35" alt=""> <span>SMPN 1 Mlandingan</span>
+				</a>
+			</div>
+        </div>
+        
+        <div class="col-sm-12 col-12">
+            <div class="content">
+                <div class="row">
+                    <div class="col-sm-7 col-6">
+                        <h4 class="page-title"></h4>
+                    </div>
+
+                   
+                </div>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <div class="card-box profile-header">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="profile-view">
+                            <div class="profile-img-wrap">
+                                    <div class="profile-img">
+                                    {% if data.gambar_sarana %}
+                                      <a href="#"><img class="avatar" src="{{data.gambar_sarana.url}}" alt=""></a>
+                                    {% else %}
+                                    <a href="#"><img class="avatar" src="{% static 'assets/img/iconsekolah.png' %}" alt=""></a>
+                                    {% endif %}
+                                       
+                                    </div>
+                                </div>
+                                <div class="profile-basic">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="profile-info-left">
+                                                <h3 class="user-name m-t-0 mb-0">{{data.nama_sarana}}</h3>
+                                             
+                                                <div class="staff-id">Jumlah Barang : {{data.stok_sarana}}</div>
+                                                <div class="staff-id">jenis Barang : {{data.jenis.nama}}</div>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <ul class="personal-info">
+                                                <li>
+                                                    <span class="title">Donatur:</span>
+                                                    <span class="text">{{data.donatur.nama_donatur}}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Lokasi Sarana:</span>
+                                                    <span class="text">{{data.lokasi_sarana}}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Keterangan:</span>
+                                                    <span class="text">{{data.keterangan|safe}}</span>
+                                                </li>
+                                                <li>
+                                                   <br/>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                        
+                        </div>
+                    </div>
+                
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'assets/js/jquery-3.2.1.min.js' %}"></script>
+	  <script src="{% static 'assets/js/popper.min.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.slimscroll.js' %}"></script>
+    <script src="{% static 'assets/js/app.js' %}"></script>
+</body>
+
+
+<!-- profile23:03-->
+</html>

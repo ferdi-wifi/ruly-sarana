@@ -1,0 +1,51 @@
+{% extends "baseadmin.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+        <div class="page-wrapper">
+            <div class="content">
+                <div class="row">
+                    <div class="col-sm-4 col-3">
+                        <h4 class="page-title">{{judul}} </h4>
+                        <h4 class="page-title">Kode Transaksi : {{data.id_transaksi}}, Peminjam: {{data.penyewa.nama_penyewa}}, keterangan: {{data.keterangan}}</h4>
+                    </div>
+                    <div class="col-sm-8 col-9 text-right m-b-20">
+                        <a href="{% url 'transaksipengembalian'  %}" class="btn btn btn-danger btn-rounded float-right"><i class="fa fa-angle-left"></i> Kembali</a>
+                    </div>
+                </div>
+				<div class="row">
+					<div class="col-md-12">
+                    <div class="table-responsive">
+							<table class="table table-border table-striped custom-table mb-0">
+								<thead>
+									<tr>
+                                                            <th>No</th>
+                                                            <th>Nama Sarana</th>
+                                                            <th>Jumlah</th>
+                                                           
+                                                           
+									</tr>
+								</thead>
+								<tbody>
+                                {% for row in detail %}
+                                <tr>
+											<td>{{ forloop.counter }}</td>
+                                            <td>{{row.sarana.nama_sarana}}</td>
+                                            <td>{{row.jumlah}}</td>
+                                            
+									</tr>
+                                {% empty %}
+                                <tr><td colspan="3" align="center">Data Kosong</td></tr>
+                                {% endfor %}
+									
+								</tbody>
+							</table>
+						</div>
+
+
+                	</div>
+                </div>
+            </div>
+            
+        </div>
+{% endblock content  %} 

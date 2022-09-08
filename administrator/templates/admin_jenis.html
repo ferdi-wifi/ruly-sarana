@@ -1,0 +1,63 @@
+{% extends "baseadmin.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+        <div class="page-wrapper">
+            <div class="content">
+                <div class="row">
+                    <div class="col-sm-4 col-3">
+                        <h4 class="page-title">{{judul}}</h4>
+                    </div>
+                    <div class="col-sm-8 col-9 text-right m-b-20">
+                        <a href="{% url 'formjenis_admin' %}" class="btn btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Tambah Data</a>
+                    </div>
+                </div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="table-responsive">
+							<table class="table table-border table-striped custom-table mb-0">
+								<thead>
+									<tr>
+										<th>No</th>
+										<th>Nama Jenis</th>
+										<th>Slug Jenis</th>
+										<th>Status</th>
+										<th class="text-right">Aksi</th>
+									</tr>
+								</thead>
+								<tbody>
+                                {% for row in data %}
+                                <tr>
+										<td>{{ forloop.counter }}</td>
+										<td>{{row.nama}}</td>
+									    <td>{{row.slug}}</td>
+										<td>
+                                        {% if row.aktif == True  %}
+										<span class="custom-badge status-green">Aktif</span></td>
+												{% else %}
+										<span class="custom-badge status-red">Tidak Aktif</span></td>
+												{% endif %}
+                                      
+										<td class="text-right">
+											<div class="dropdown dropdown-action">
+												<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+												<div class="dropdown-menu dropdown-menu-right">
+													<a class="dropdown-item" href="{% url 'editjenis_admin' row.slug  %}"><i class="fa fa-pencil m-r-5"></i> Ubah</a>
+													<a class="dropdown-item" href="{% url 'deletejenis_admin' row.id  %}"><i class="fa fa-trash-o m-r-5"></i> Hapus</a>
+												</div>
+											</div>
+										</td>
+									</tr>
+                                {% empty %}
+                                <tr><td colspan="5" align="center">Data Kosong</td></tr>
+                                {% endfor %}
+									
+								</tbody>
+							</table>
+						</div>
+                </div>
+                </div>
+            </div>
+            
+        </div>
+{% endblock content  %} 

@@ -1,0 +1,341 @@
+{% extends "baseadmin.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="page-wrapper">
+            <div class="content">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h4 class="page-title">{{judul}}</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-8 col-xl-8">
+						<div class="card">
+							<div class="card-header">
+								<h4 class="card-title d-inline-block">Data Sarana</h4></a>
+							</div>
+							<div class="card-body p-0">
+								<div class="table-responsive">
+									<table class="table mb-0">
+										<thead>
+											<tr>
+												<th>Gambar</th>
+												<th>Nama Sarana</th>
+												<th>Lokasi</th>
+												<th>Jumlah</th>
+												<th>Status</th>
+												<th class="text-right">Aksi</th>
+											</tr>
+										</thead>
+										<tbody>
+                                        {% for row in sarana %}
+                                        <tr>
+												<td>
+                                                {% if row.gambar_sarana %}
+                                                  <a href="" title="John Doe"><img src="{{row.gambar_sarana.url}}" alt="" class="w-40 rounded-circle"><span class="status online"></span></a>
+                                                {% else %}
+                                                <a class="avatar" href=""></a>
+                                                {% endif %}
+												</td>                 
+												<td>
+													{{row.nama_sarana}}
+												</td>
+												<td>
+													{{row.lokasi_sarana}}
+												</td>
+												<td>
+													{{row.stok_sarana}}
+												</td>
+												<td>
+													{{row.status}}
+												</td>
+												<td class="text-right">
+                                                {% if row.stok_sarana == 0 %}
+                                                	<button class="btn btn-outline-danger take-btn" disabled>Pinjam</button>
+                                                {% else %}
+                                                	<button id="pinjam"  data-stok="{{row.stok_sarana}}" data-id="{{row.id}}" class="btn btn-outline-primary take-btn">Pinjam</button>
+                                                {% endif %}
+												
+												</td>
+											</tr>
+                                        {% empty %}
+                                         <tr>
+												                
+												<td colspan="5" align="center">
+													Data Sarana Kosong
+												</td>
+											
+											</tr>
+                                        {% endfor %}
+											
+									
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+                     
+                    <div class="col-12 col-md-6 col-lg-4 col-xl-4">
+                        <div class="card member-panel">
+							<div class="card-header bg-white">
+								<h4 class="card-title mb-0">Form Peminjaman</h4>
+                                <hr/>
+							</div>
+                            <form action="" id="simpantransaksi" method="post">
+                            {% csrf_token %}
+                            <div class="card-body">
+                                <ul class="contact-list">
+                                <input type="hidden" value="{{hitungtemp}}" id="hitungtemp">
+                                <div class="form-group col-12">
+                                <label>Tanggal Peminjaman </label>
+                                <input class="form-control" type="date" name="tgl_pinjam"  id="tgl_pinjam" >
+                            </div>
+                            <div class="form-group col-12">
+                                <label>Nama Penyewa </label>
+                                    <select class="form-control" id="penyewa" name="penyewa">
+                                            <option value="0">-- Pilih Nama Penyewa --</option>
+                                            {% for pw in penyewa %}
+                                            
+                                            <option value="{{pw.id}}">{{pw.nama_penyewa}}</option>
+                                            
+                                            {% endfor %}
+                                            
+                                            
+                                        </select>
+                            </div>
+                                {% for rw in temp %}
+                                 <li>
+                                        <div class="contact-cont">
+                                        <div class="float-left user-img m-r-10">
+                                                <button class="btn btn-outline-danger take-btn" data-id="{{rw.id}}" id="hapuskeranjang"><i class="fa fa-times"></i></button>
+                                            </div>
+                                            {% if rw.sarana.gambar_sarana %}
+                                             <div class="float-left user-img m-r-10">
+                                                <a href="" title="John Doe"><img src="{{rw.sarana.gambar_sarana.url}}" alt="" class="w-40 rounded-circle"><span class="status online"></span></a>
+                                            </div>
+                                            {% else %}
+                                             <div class="float-left user-img m-r-10">
+                                                <a href="" title="John Doe"><img src="{% static 'assets/img/user.jpg' %}" alt="" class="w-40 rounded-circle"><span class="status online"></span></a>
+                                            </div>
+                                            {% endif %}
+                                           
+                                            <div class="contact-info">
+                                                <span class="contact-name text-ellipsis">Nama Sarana : {{rw.sarana.nama_sarana}} </span>
+                                                <span class="contact-date">Jumlah : {{rw.jumlah}}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% empty %}
+                                 <li>
+                                        <div class="alert alert-danger">Belum ada transaksi</div>
+                                    </li>
+                                {% endfor %}
+                                   
+                                  
+                            </div>
+                            <div class="card-footer text-center bg-white">
+                                <button class="btn btn-primary submit-btn" type="submit">Simpan Transaksi</button>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+{% comment %} Modal {% endcomment %}
+ <div id="add_keranjang" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content modal-md">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Tentukan Jumlah</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                          <form action="" id="simpankeranjang" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label>Jumlah </label>
+                                <input class="form-control" type="hidden" name="id"  id="id">
+                                <input class="form-control" type="hidden" name="stok"  id="stok">
+                                <input class="form-control" type="number" name="jumlah"  id="jumlah" >
+                            </div>
+                          
+                           
+                            <div class="m-t-20 text-center">
+                                <button class="btn btn-primary submit-btn" type="submit">Simpan Pinjam</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+<script>
+  $('body').on('click', '#pinjam',function(e) {
+    e.preventDefault();
+    $('#add_keranjang').modal('show');
+    var id = $(this).data("id");
+    var stok = $(this).data("stok");
+    $('#id').val(id);
+    $('#stok').val(stok);
+   
+
+  
+ });
+   $('body').on('click', '#hapuskeranjang',function(e) {
+    e.preventDefault();
+    var id = $(this).data("id");
+
+     let csr = $("input[name=csrfmiddlewaretoken]").val();
+         mydata = {sid:id, csrfmiddlewaretoken: csr}
+         mythis = this;
+
+          swal({
+        title: "Apakah Anda Yaqin?",
+        text: "Akan menghapus data terebut secara permanen",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+        })
+        .then((willDelete) => {
+        if (willDelete) {
+
+            $.ajax({
+                type: "POST",
+                 url: "{% url 'hapuskeranjang' %}",
+                data: mydata,
+                success: function (data) {
+                    if(data.status == 1){
+                        $(mythis).closest("li").fadeOut();
+                          window.location="{% url 'transaksipeminjaman' %}";
+                      
+                    }
+                }
+            });
+            swal("Info! Data telah berhasil terhapus secara permanen", {
+            icon: "success",
+            });
+        } else {
+            swal("Data anda Aman, tidak terhapus");
+        }
+    });
+     
+ });
+
+    $('body').on('submit', '#simpankeranjang',function (e) {
+            e.preventDefault();
+           
+              var jumlah =  $('#jumlah').val();
+              var stok =  $('#stok').val();
+             
+            if(jumlah == ""){
+                    swal({
+                    title: "Perhatikan!!",
+                    text: "Jumlah Masih Kosong",
+                    closeModal: false
+                    }).then(function() {
+                            swal.close();
+                            $('#jumlah').focus();
+                    });
+            
+            }else{
+                if (parseInt(jumlah) > parseInt(stok) ) {
+                    swal({
+                        title: "Perhatikan!!",
+                        text: "Jumlah yang dipinjam melebihi jumlah sarana yang ada",
+                        closeModal: false
+                        }).then(function() {
+                                swal.close();
+                                $('#jumlah').focus();
+                                $('#jumlah').val("");
+                        });
+                
+                }else{
+                if(confirm("Apakah Transaksi tersebut mau disimpan?")){
+                      $.ajax({
+                                url: "{% url 'simpankeranjang' %}",
+                                type:"post",
+                                data:new FormData(this),
+                                processData:false,
+                                contentType:false,
+                                cache:false,
+                                async:false,
+                                    success: function(data){ 
+                                         $('#add_keranjang').modal('hide');
+                                     window.location="{% url 'transaksipeminjaman' %}";
+                                        
+                                }
+                        }); 
+                 }else{
+                        return false;
+                }
+            }
+            }
+
+        });
+   
+        
+    $('body').on('submit', '#simpantransaksi',function (e) {
+            e.preventDefault();
+           
+              var hitungtemp =  $('#hitungtemp').val();
+              var tgl_pinjam =  $('#tgl_pinjam').val();
+              var penyewa =  $('#penyewa').val();
+             
+            if(hitungtemp == 0){
+                    swal({
+                    title: "Perhatikan!!",
+                    text: "Belum ada transaksi....!",
+                    closeModal: false
+                    }).then(function() {
+                            swal.close();
+                         
+                    });
+            }else if(tgl_pinjam == ""){
+                      swal({
+                    title: "Perhatikan!!",
+                    text: "Tanggal Peminjaman Masih Kosong",
+                    closeModal: false
+                    }).then(function() {
+                            swal.close();
+                            $('#tgl_pinjam').focus();
+                    });
+            }else if(penyewa == '0'){
+                    swal({
+                    title: "Perhatikan!!",
+                    text: "Penyewa Belum Masih Kosong",
+                    closeModal: false
+                    }).then(function() {
+                            swal.close();
+                            $('#penyewa').focus();
+                    });
+            
+            }else{
+            
+                if(confirm("Apakah Transaksi tersebut mau disimpan?")){
+                      $.ajax({
+                                url: "{% url 'simpantransaksi' %}",
+                                type:"post",
+                                data:new FormData(this),
+                                processData:false,
+                                contentType:false,
+                                cache:false,
+                                async:false,
+                                    success: function(data){ 
+                                
+                                     window.location="{% url 'transaksipeminjaman' %}";
+                                        
+                                }
+                        }); 
+                 }else{
+                        return false;
+                }
+            
+            }
+
+        });
+
+</script>
+{% endblock content  %} 

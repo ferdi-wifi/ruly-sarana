@@ -1,0 +1,76 @@
+{% extends "baseadmin.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+        {% comment %}  {% endcomment %}
+        <div class="page-wrapper">
+            <div class="content">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h4 class="page-title">{{judul|title}}</h4>
+                        {% comment %}  {% endcomment %}
+                         <div class="content">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                        <div class="dash-widget">
+							<span class="dash-widget-bg1"><i class="fa fa-street-view" aria-hidden="true"></i></span>
+							<div class="dash-widget-info text-right">
+								<h3>{{jmltransaksihariini}}</h3>
+								<span class="widget-title1">Penyewa Hari ini <i class="fa fa-check" aria-hidden="true"></i></span>
+							</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                        <div class="dash-widget">
+                            <span class="dash-widget-bg2"><i class="fa fa-user-o"></i></span>
+                            <div class="dash-widget-info text-right">
+                                <h3>{{jmlpetugas}}</h3>
+                                <span class="widget-title2">Data Petugas <i class="fa fa-check" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                        <div class="dash-widget">
+                            <span class="dash-widget-bg3"><i class="fa fa-sitemap" aria-hidden="true"></i></span>
+                            <div class="dash-widget-info text-right">
+                                <h3>{{jmlsarana}}</h3>
+                                <span class="widget-title3">Data Sarana <i class="fa fa-check" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                        <div class="dash-widget">
+                            <span class="dash-widget-bg4"><i class="fa fa-heartbeat" aria-hidden="true"></i></span>
+                            <div class="dash-widget-info text-right">
+                                <h3>{{jmldoatur}}</h3>
+                                <span class="widget-title4">Data Donatur <i class="fa fa-check" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                      <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                        <div class="dash-widget">
+                            <span class="dash-widget-bg1"><i class="fa fa-sort-numeric-asc" aria-hidden="true"></i></span>
+                            <div class="dash-widget-info text-right">
+                                <h3>{{jmljenis}}</h3>
+                                <span class="widget-title1">Data Jenis <i class="fa fa-check" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                      <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                        <div class="dash-widget">
+                            <span class="dash-widget-bg2"><i class="fa fa-users" aria-hidden="true"></i></span>
+                            <div class="dash-widget-info text-right">
+                                <h3>{{jmlpenyewa}}</h3>
+                                <span class="widget-title2">Data Penyewa <i class="fa fa-check" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                        {% comment %}  {% endcomment %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% comment %}  {% endcomment %}
+{% endblock content  %} 

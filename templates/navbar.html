@@ -1,0 +1,58 @@
+                    <ul>
+                     {% for group in user.groups.all  %}
+                     {% if group.name == "administrator" %}
+                    
+                    
+                        <li class="menu-title">Main</li>
+                        <li class="{% if menu == "beranda" %}active{% endif %}">
+                            <a href="{% url 'beranda_admin' %}"><i class="fa fa-dashboard"></i> <span>Beranda</span></a>
+                        </li>
+                        <li class="{% if menu == "jenis" %}active{% endif %}">
+                            <a href="{% url 'jenis_admin' %}"><i class="fa fa-clone"></i> <span>Jenis</span></a>
+                        </li>
+                        <li class="{% if menu == "donatur" %}active{% endif %}">
+                            <a href="{% url 'donatur_admin' %}"><i class="fa fa-handshake-o"></i> <span>Donatur</span></a>
+                        </li>
+                         <li class="{% if menu == "sarana" %}active{% endif %}">
+                            <a href="{% url 'sarana_admin' %}"><i class="fa fa-id-card-o"></i> <span>Sarana</span></a>
+                        </li>
+                         <li class="{% if menu == "penyewa" %}active{% endif %}">
+                            <a href="{% url 'penyewa_admin' %}"><i class="fa fa-users"></i> <span>Penyewa</span></a>
+                        </li>
+                         <li class="{% if menu == "petugas" %}active{% endif %}">
+                            <a href="{% url 'petugas_admin' %}"><i class="fa fa-cogs"></i> <span>Petugas</span></a>
+                        </li>
+                         <li class="menu-title">Transaksi</li>
+                          <li class="{% if menu == "pengembalian" %}active{% endif %}">
+                            <a href="{% url 'transaksiadminpengembalian' %}"><i class="fa fa-send"></i> <span>Transaksi Sarana</span></a>
+                        </li>
+                         <li class="menu-title">Laporan</li>
+                          <li class="{% if menu == "laporan" %}active{% endif %}">
+                            <a href="{% url 'transaksilaporan' %}"><i class="fa fa-book"></i> <span>Laporan Sarana</span></a>
+                        </li>
+                     
+                          <li class="">
+                            <a href="{% url 'logout' %}"><i class="fa fa-sign-out"></i> <span>Logout</span></a>
+                        </li>
+                        {% endif %}
+                        {% if group.name == "petugas" %}
+                          <li class="menu-title">Halaman Petugas</li>
+                        <li class="{% if menu == "beranda" %}active{% endif %}">
+                            <a href="{% url 'beranda' %}"><i class="fa fa-dashboard"></i> <span>Beranda</span></a>
+                        </li>
+                       <li class="submenu">
+							<a href="#"><i class="fa fa-send"></i> <span> Transaksi </span> <span class="menu-arrow"></span></a>
+							<ul style="display: none;">
+								<li><a class="{% if menu == "peminjaman" %}active{% endif %}" href="{% url 'transaksipeminjaman' %}">Peminjaman</a></li>
+								<li><a class="{% if menu == "pengembalian" %}active{% endif %}" href="{% url 'transaksipengembalian' %}">Pengembalian</a></li>
+							</ul>
+						</li>
+                         <li class="{% if menu == "penyewa" %}active{% endif %}">
+                            <a href="{% url 'penyewa' %}"><i class="fa fa-users"></i> <span>Penyewa</span></a>
+                        </li>
+                          <li class="">
+                            <a href="{% url 'logout' %}"><i class="fa fa-sign-out"></i> <span>Logout</span></a>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
